@@ -69,3 +69,5 @@ app.post('/type', (req, res) => {
     db.collection('pets-type').add(typePet)
     res.redirect('/')
 })
+
+module.exports = app
