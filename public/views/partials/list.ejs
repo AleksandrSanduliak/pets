@@ -1,7 +1,7 @@
 
 <div class="list">
     <% lists.map(item => {%>
-    <form action="/update/<%= item.id %>" method="post" role="form">
+    <form action="/update/<%= item.id %>" class="form" method="post" role="form">
         <input type="text" name="name" value="<%= item.data.name %>">
         <input type="text" name="name" value="<%= item.data.subname %>">
         <p><%= item.data.type %></p>

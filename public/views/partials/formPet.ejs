@@ -1,4 +1,4 @@
-<form action="/pet" method="post" role="form">
+<form action="/pet" class="form form-add" method="post" role="form">
     <input type="text" name="name">
     <input type="text" name="subname">
     <select name="types"  id="select">
@@ -6,5 +6,5 @@
             <option value="<%= item.type %>"><%= item.type %> </option>
         <% }) %>
     </select>
-    <button type="submit">submit</button>
+    <button type="submit">add pet</button>
 </form>

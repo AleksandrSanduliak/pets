@@ -62,4 +62,14 @@ button {
 
 .list {
   display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.form {
+  display: inline-flex;
+  flex-wrap: nowrap;
+}
+.form-add {
+  margin-bottom: 2rem;
 }/*# sourceMappingURL=bundle.css.map */

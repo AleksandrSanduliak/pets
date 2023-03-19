@@ -3,4 +3,13 @@
 
 .list{
     display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+.form{
+    display: inline-flex;
+    flex-wrap: nowrap;
+    &-add{
+        margin-bottom: 2rem;
+    }
 }
