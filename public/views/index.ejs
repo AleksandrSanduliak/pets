@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <%- include('partials/document/head.ejs') %>
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="header__container">
+                <h1>учет животных в приюте</h1>
+            </div>
+        </header>
+        <main class="main">
+            <div class="main__container">
+
+                <%- include('partials/formPetType.ejs') %>
+                <%- include('partials/formPet.ejs') %>
+
+
+                <%- include('partials/list.ejs') %>
+            </div>
+        </main>
+        <footer class="footer">
+
+        </footer>
+    </div>
+    <%- include('partials/script.ejs')%>
+</body>
+</html>
+

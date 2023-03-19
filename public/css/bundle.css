@@ -1,0 +1,65 @@
+@import 'styles/normalize.css';
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  height: auto;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding: 0;
+  margin: 0;
+}
+
+[class*=_container] {
+  padding: 0 1.25rem;
+  margin: 0 auto;
+  height: 100%;
+  max-width: 80rem;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+li {
+  list-style-type: none;
+  color: black;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+}
+
+.wrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1 1 auto;
+}
+
+.list {
+  display: flex;
+}/*# sourceMappingURL=bundle.css.map */

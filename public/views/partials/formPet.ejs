@@ -1,0 +1,10 @@
+<form action="/pet" method="post" role="form">
+    <input type="text" name="name">
+    <input type="text" name="subname">
+    <select name="types"  id="select">
+        <% type.map(item => {%>
+                <option value="<%= item.type %>"><%= item.type %> </option>
+        <% }) %>
+    </select>
+    <button type="submit">submit</button>
+</form>

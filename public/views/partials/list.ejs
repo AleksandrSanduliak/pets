@@ -1,0 +1,5 @@
+<% lists.map(item => {%>
+    <div class="list"><p><%= item.data.name %> </p> <p><%= item.data.subname %></p> 
+    <p><%= item.data.type %></p>
+    <a style="margin-left: 5px;" href="delete/<%= item.id %>">delete</a></div>
+<% }) %>
