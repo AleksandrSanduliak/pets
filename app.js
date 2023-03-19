@@ -70,4 +70,16 @@ app.post('/type', (req, res) => {
     res.redirect('/')
 })
 
+app.put('/update/:id', async(req,res) => {
+    let id = req.params.id
+    const data = db.collection('list').doc(id)
+    console.log(req.body.name + 'body tag')
+    data.update({
+        name: req.body.name,
+        subname: req.body.subname,
+        type: req.body.types
+    })
+    res.redirect('/')
+})
+
 module.exports = app

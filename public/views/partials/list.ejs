@@ -1,5 +1,12 @@
-<% lists.map(item => {%>
-    <div class="list"><p><%= item.data.name %> </p> <p><%= item.data.subname %></p> 
-    <p><%= item.data.type %></p>
-    <a style="margin-left: 5px;" href="delete/<%= item.id %>">delete</a></div>
-<% }) %>
+
+<div class="list">
+    <% lists.map(item => {%>
+    <form action="/update/<%= item.id %>" method="post" role="form">
+        <input type="text" name="name" value="<%= item.data.name %>">
+        <input type="text" name="name" value="<%= item.data.subname %>">
+        <p><%= item.data.type %></p>
+        <a style="margin-left: 5px;" href="update/<%= item.id %>">update</a>
+        <a style="margin-left: 5px;" href="delete/<%= item.id %>">delete</a>
+    </form>
+    <% }) %>
+</div>
