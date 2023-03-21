@@ -10,14 +10,15 @@ app.use(express.urlencoded({extended: true}));
 app.set("views", __dirname + "/views")
 app.set("view engine", "ejs")
 
-
 app.use(express.static(path.join(__dirname, "public")));
+
+//crud 
 app.get('/', async (req, res) => {
         // getlist
         const respon = await db.collection('list').get()
         const {docs} = respon
         const result = docs.map(item => ({id: item.id,data: item.data()}))
-        console.log(result)
+        // console.log(result)
         // get pets type
 
         
@@ -27,32 +28,19 @@ app.get('/', async (req, res) => {
             // console.log(doc.data())
             arr.push(doc.data())
         })
-        console.log(arr)
+        // console.log(arr)
     res.render(path.join(__dirname + '/public/views/index'), {
         lists: result,
         type: arr,
     })
 })
-app.get('/petz', async (req, res) => {
-    const data = await db.collection('list').get()
-    const {
-        docs
-    } = data
-    const dataFromDB = docs.map(el => ({
-        id: el.id,
-        data: el.data()
-    }))
-    console.log(dataFromDB)
-    res.send(dataFromDB[0])
-})
-app.listen(port, () => console.log(`server start on port ${port}`))
-
 app.post('/pet', (req, res) => {
     const petData = {
         name: req.body.name,
         subname: req.body.subname,
         type: req.body.types
     }
+    console.log(petData)
     db.collection('list').add(petData)
     res.redirect('/')
 })
@@ -61,7 +49,19 @@ app.get('/delete/:id', (req, res) => {
     db.collection('list').doc(id).delete()
     res.redirect('/')
 })
+app.post('/update/:id', (req, res) => {
+    let id = req.params.id
+    const newData = {
+        name: req.body.name,
+        subname: req.body.subname,
+        type: req.body.types
+    }
+    console.log(petData)
+    db.collection('list').doc(id).update(newData)
+    res.redirect('/')
+})
 
+// add pet type 
 app.post('/type', (req, res) => {
     let typePet = {
         type: req.body.type
@@ -70,16 +70,6 @@ app.post('/type', (req, res) => {
     res.redirect('/')
 })
 
-app.put('/update/:id', async(req,res) => {
-    let id = req.params.id
-    const data = db.collection('list').doc(id)
-    console.log(req.body.name + 'body tag')
-    data.update({
-        name: req.body.name,
-        subname: req.body.subname,
-        type: req.body.types
-    })
-    res.redirect('/')
-})
+app.listen(port, () => console.log(`server start on port ${port}`))
 
 module.exports = app

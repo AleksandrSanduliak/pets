@@ -12,7 +12,10 @@
         </header>
         <main class="main">
             <div class="main__container">
-
+                <ul class="buttons">
+                    <li data-id="addPet" class="buttons__item">Добавить животное</li>
+                    <li data-form="addPetType" class="buttons__item">Добавить тип животного</li>
+                </ul>
                 <%- include('partials/formPetType.ejs') %>
                 <%- include('partials/formPet.ejs') %>
 

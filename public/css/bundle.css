@@ -69,7 +69,15 @@ button {
 .form {
   display: inline-flex;
   flex-wrap: nowrap;
+  align-items: center;
+  margin-bottom: 0.5rem;
 }
 .form-add {
   margin-bottom: 2rem;
+}
+
+.btn {
+  background: white;
+  border: 1px black solid;
+  padding: 0.125rem;
 }/*# sourceMappingURL=bundle.css.map */

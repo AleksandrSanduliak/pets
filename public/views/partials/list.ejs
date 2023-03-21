@@ -1,12 +1,14 @@
 
 <div class="list">
+    <h2 style="margin:0 auto; margin-bottom: 1rem;">Список животных</h2>
     <% lists.map(item => {%>
-    <form action="/update/<%= item.id %>" class="form" method="post" role="form">
-        <input type="text" name="name" value="<%= item.data.name %>">
-        <input type="text" name="name" value="<%= item.data.subname %>">
-        <p><%= item.data.type %></p>
-        <a style="margin-left: 5px;" href="update/<%= item.id %>">update</a>
-        <a style="margin-left: 5px;" href="delete/<%= item.id %>">delete</a>
+    <form action="/update/:id" class="form" method="post" role="form">
+        <input type="text" placeholder="Кличка" name="name" value="<%= item.data.name %>">
+        <input type="text" name="subname" value="<%= item.data.subname %>">
+        <input type="text" name="types" value="<%= item.data.type %>">
+
+        <button class="btn" style="margin-left: 5px;" type="submit">edit</button>
+        <a class="btn" style="margin-left: 5px;" href="delete/<%= item.id %>">del</a>
     </form>
     <% }) %>
 </div>
