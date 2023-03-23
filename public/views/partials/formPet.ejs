@@ -1,7 +1,10 @@
+<p data-id="addPet" class="buttons__item">Добавить животное</p>
 <form action="/pet" class="form form-add form-addPet" method="post" role="form">
-    <input type="text" name="name" required>
-    <input type="text" name="subname" required>
-    <select name="types"  id="select">
+    <input class="inputs" type="text" placeholder="Кличка" name="name" required>
+    <input class="inputs" type="text" placeholder="Дата приема" name="date" required>
+    <input class="inputs" type="text" placeholder="Имя сдавшего" name="subname" required>
+    <input class="inputs" type="text" placeholder="Телефон сдавшего" name="phone" required>
+    <select class="inputs" name="types" id="select">
         <% type.map(item => {%>
             <option value="<%= item.type %>"><%= item.type %> </option>
         <% }) %>

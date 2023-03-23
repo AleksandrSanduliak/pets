@@ -2,63 +2,83 @@ const express = require('express')
 const path = require('path')
 const app = express()
 const port = 3000
+const XLSX = require("xlsx");
 const ejs = require('ejs')
 const db = require('./public/firebase/firebase')
+
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+const multer = require('multer')
+
 app.set("views", __dirname + "/views")
 app.set("view engine", "ejs")
-
 app.use(express.static(path.join(__dirname, "public")));
 
 //crud 
 app.get('/', async (req, res) => {
-        // getlist
+    // getlist
+
+    let result = ''
         const respon = await db.collection('list').get()
         const {docs} = respon
-        const result = docs.map(item => ({id: item.id,data: item.data()}))
-        // console.log(result)
-        // get pets type
+        result = docs.map(item => ({id: item.id, data: item.data()}))
 
-        
+
+    // get pets type
         const type = await db.collection('pets-type').get()
         const arr = []
-        type.forEach(doc => {
-            // console.log(doc.data())
-            arr.push(doc.data())
-        })
-        // console.log(arr)
+        type.forEach(doc => {arr.push(doc.data())})
+
     res.render(path.join(__dirname + '/public/views/index'), {
         lists: result,
         type: arr,
     })
 })
-app.post('/pet', (req, res) => {
-    const petData = {
-        name: req.body.name,
-        subname: req.body.subname,
-        type: req.body.types
+app.post('/pet', async(req, res) => {
+    try{
+        const petData = {
+            name: req.body.name,
+            date: req.body.date,
+            subname: req.body.subname,
+            phone: req.body.phone,
+            type: req.body.types,
+        }
+        console.log(petData)
+        db.collection('list').add(petData)
+        res.redirect('/')
+    }catch(err){
+        console.log(err + ' error POST pet list')
     }
-    console.log(petData)
-    db.collection('list').add(petData)
-    res.redirect('/')
+    
 })
-app.get('/delete/:id', (req, res) => {
-    let id = req.params.id
-    db.collection('list').doc(id).delete()
-    res.redirect('/')
-})
-app.post('/update/:id', (req, res) => {
-    let id = req.params.id
-    const newData = {
-        name: req.body.name,
-        subname: req.body.subname,
-        type: req.body.types
+app.get('/delete/:id', async(req, res) => {
+    try{
+        let id = req.params.id
+        db.collection('list').doc(id).delete()
+        res.redirect('/')
+    }catch(err){
+        console.log(err + ' ERROR DELETE')
     }
-    console.log(petData)
-    db.collection('list').doc(id).update(newData)
-    res.redirect('/')
+
+})
+app.post('/update/:id', async(req, res) => {
+    try{
+        let id = req.params.id
+        const newData = {
+            name: req.body.name,
+            date: req.body.date,
+            subname: req.body.subname,
+            phone: req.body.phone,
+            type: req.body.types,
+        }
+        console.log(newData)
+        db.collection('list').doc(id).update(newData)
+        res.redirect('/')
+    }catch(error){
+        console.log(error + ' error UPDATE')
+    }
+
 })
 
 // add pet type 
@@ -70,6 +90,34 @@ app.post('/type', (req, res) => {
     res.redirect('/')
 })
 
-app.listen(port, () => console.log(`server start on port ${port}`))
+// multer settings
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "uploads");
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + "-" + file.originalname);
+    },
+  });
+const upload = multer({ storage: storage });
 
+app.post('/excel', upload.single("file"), async(req, res) => {
+    const file = req.file.path
+    const read = XLSX.readFile(file)
+    const sheet = read.SheetNames
+    const promis = new Promise((resolve, reject) => {
+        sheet.forEach((el) => {
+            const data = XLSX.utils.sheet_to_json(read.Sheets[sheet[0]])
+            console.log(data)
+            const result = data.forEach(el => {
+                const promis = db.collection('list').add(el)
+                setTimeout(resolve, 1000)
+            })
+        })
+        // resolve()
+    }).catch(err => console.log(err +' err excel promis'))
+    await promis
+    res.redirect('/')
+})
+app.listen(port, () => console.log(`server start on port ${port}`))
 module.exports = app

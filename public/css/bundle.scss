@@ -5,6 +5,8 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .form{
     display: inline-flex;
@@ -19,4 +21,13 @@
     background: white;
     border: 1px black solid;
     padding: 0.125rem;
+}
+input{
+    max-width: 7rem;
+}
+.inputs{
+    margin-right: 0.225rem;
+}
+.pet-type{
+    margin-bottom: 1rem;
 }
