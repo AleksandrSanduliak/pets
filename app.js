@@ -5,6 +5,7 @@ const port = 3000
 const XLSX = require("xlsx");
 const ejs = require('ejs')
 const db = require('./public/firebase/firebase')
+const router = express.Router()
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -93,7 +94,7 @@ app.post('/type', (req, res) => {
 // multer settings
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, path.join(__dirname, '/uploads/'));
+        cb(null, path.join(__dirname, 'tmp/uploads/'));
     },
     filename: function (req, file, cb) {
       cb(null, Date.now() + "-" + file.originalname);
@@ -118,6 +119,12 @@ app.post('/excel', upload.single("file"), async(req, res) => {
     }).catch(err => console.log(err +' err excel promis'))
     await promis
     res.redirect('/')
+})
+
+app.get('/print/:id', (req, res) => {
+    id = req.params.id
+    const text = `welcome to club buddy ${id}`
+    res.send(text)
 })
 app.listen(port, () => console.log(`server start on port ${port}`))
 module.exports = app
