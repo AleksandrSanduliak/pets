@@ -93,15 +93,15 @@ app.post('/type', (req, res) => {
 // multer settings
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, path.join(__dirname, '/tmp/uploads/'));
-        // cb(null, "/tmp/uploads");
+        // cb(null, path.join(__dirname, '/tmp/uploads/'));
+        cb(null, "/tmp");
     },
     filename: function (req, file, cb) {
       cb(null, Date.now() + "-" + file.originalname);
     },
   });
 const upload = multer({ storage: storage });
-app.use('/tmp/uploads/', express.static('/tmp/uploads/'));
+app.use('/tmp', express.static('/tmp'));
 app.post('/excel', upload.single("file"), async(req, res) => {
     const file = req.file.path
     console.log(file)
