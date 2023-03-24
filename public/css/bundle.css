@@ -78,12 +78,6 @@ button {
   margin-bottom: 2rem;
 }
 
-.btn {
-  background: white;
-  border: 1px black solid;
-  padding: 0.125rem;
-}
-
 input {
   max-width: 7rem;
 }
@@ -93,7 +87,6 @@ input {
 }
 
 .pet-type {
-  margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
