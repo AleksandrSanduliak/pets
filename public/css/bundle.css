@@ -92,4 +92,8 @@ input {
 
 .excel-form {
   margin-bottom: 1.25rem;
+}
+
+span {
+  display: flex !important;
 }/*# sourceMappingURL=bundle.css.map */
