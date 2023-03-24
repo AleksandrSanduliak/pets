@@ -93,5 +93,10 @@ input {
 }
 
 .pet-type {
+  margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+.excel-form {
+  margin-bottom: 1.25rem;
 }/*# sourceMappingURL=bundle.css.map */

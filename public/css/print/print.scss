@@ -1,0 +1,17 @@
+@media print {
+    .header{
+        display: none;
+    }
+}
+.header-title{
+    margin-bottom: 0.5rem;
+}
+.ul-head{
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+.listpets{
+    li{
+        margin-bottom: 0.225rem;
+    }
+}

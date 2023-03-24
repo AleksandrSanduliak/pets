@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <%- include('partials/document/head.ejs') %>
+    <link rel="stylesheet" href="../css/print/print.css">
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="header__container">
+                <h1 class="header-title">Распечатать карточку животного</h1>
+                <button class="btn" onclick="window.print()">Распечатать</button>
+                <a class="btn" href="/">Главная страница</a>
+            </div>
+        </header>
+        <main class="main">
+            <div class="main__container">
+                <p class="ul-head">КАРТОЧКА УЧЕТА БЕЗНАДЗОРНОГО ИЛИ БРОДЯЧЕГО ЖИВОТНОГО 
+                    <br>(ЗАПОЛНЯЕТСЯ НА КАЖДОЕ ЖИВОТНОЕ)</p>
+                    <ul class="listpets">
+                        <li>Кличка: <%= dataResult.name%></li>
+                        <li>Дата: <%= dataResult.date%></li>
+                        <li>Кто сдал в приют(ФИО): <%= dataResult.subname%></li>
+                        <li>Номер телефона: <%= dataResult.phone%></li>
+                        <li>Тип животного: <%= dataResult.type%></li>
+
+                        <li>Дата выписки животного из приюта:</li>
+                        <li>ФИО руководителя Приюта:</li>
+                        <li>Подпись:</li>
+                    </ul>
+                
+            </div>
+        </main>
+        <footer class="footer">
+
+        </footer>
+    </div>
+    <%- include('partials/script.ejs')%>
+</body>
+</html>

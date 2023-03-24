@@ -7,7 +7,9 @@ const ejs = require('ejs')
 const db = require('./public/firebase/firebase')
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({
+    extended: true
+}));
 
 const multer = require('multer')
 
@@ -18,25 +20,29 @@ app.use(express.static(path.join(__dirname, "public")));
 //crud 
 app.get('/', async (req, res) => {
     // getlist
-
     let result = ''
-        const respon = await db.collection('list').get()
-        const {docs} = respon
-        result = docs.map(item => ({id: item.id, data: item.data()}))
+    const respon = await db.collection('list').get()
+    const {docs} = respon
+    result = docs.map(item => ({
+        id: item.id,
+        data: item.data()
+    }))
 
 
     // get pets type
-        const type = await db.collection('pets-type').get()
-        const arr = []
-        type.forEach(doc => {arr.push(doc.data())})
+    const type = await db.collection('pets-type').get()
+    const arr = []
+    type.forEach(doc => {
+        arr.push(doc.data())
+    })
 
     res.render(path.join(__dirname + '/public/views/index'), {
         lists: result,
         type: arr,
     })
 })
-app.post('/pet', async(req, res) => {
-    try{
+app.post('/pet', async (req, res) => {
+    try {
         const petData = {
             name: req.body.name,
             date: req.body.date,
@@ -47,23 +53,23 @@ app.post('/pet', async(req, res) => {
         console.log(petData)
         db.collection('list').add(petData)
         res.redirect('/')
-    }catch(err){
+    } catch (err) {
         console.log(err + ' error POST pet list')
     }
-    
+
 })
-app.get('/delete/:id', async(req, res) => {
-    try{
+app.get('/delete/:id', async (req, res) => {
+    try {
         let id = req.params.id
         db.collection('list').doc(id).delete()
         res.redirect('/')
-    }catch(err){
+    } catch (err) {
         console.log(err + ' ERROR DELETE')
     }
 
 })
-app.post('/update/:id', async(req, res) => {
-    try{
+app.post('/update/:id', async (req, res) => {
+    try {
         let id = req.params.id
         const newData = {
             name: req.body.name,
@@ -75,7 +81,7 @@ app.post('/update/:id', async(req, res) => {
         console.log(newData)
         db.collection('list').doc(id).update(newData)
         res.redirect('/')
-    }catch(error){
+    } catch (error) {
         console.log(error + ' error UPDATE')
     }
 
@@ -93,16 +99,15 @@ app.post('/type', (req, res) => {
 // multer settings
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        // cb(null, path.join(__dirname, '/tmp/uploads/'));
         cb(null, "/tmp");
     },
     filename: function (req, file, cb) {
-      cb(null, Date.now() + "-" + file.originalname);
+        cb(null, Date.now() + "-" + file.originalname);
     },
-  });
-const upload = multer({ storage: storage });
+});
+const upload = multer({storage: storage});
 app.use('/tmp', express.static('/tmp'));
-app.post('/excel', upload.single("file"), async(req, res) => {
+app.post('/excel', upload.single("file"), async (req, res) => {
     const file = req.file.path
     console.log(file)
     const read = XLSX.readFile(file)
@@ -116,16 +121,18 @@ app.post('/excel', upload.single("file"), async(req, res) => {
                 setTimeout(resolve, 1000)
             })
         })
-        // resolve()
-    }).catch(err => console.log(err +' err excel promis'))
+    }).catch(err => console.log(err + ' err excel promis'))
     await promis
     res.redirect('/')
 })
 
-app.get('/print/:id', (req, res) => {
+app.get('/print/:id', async(req, res) => {
     id = req.params.id
-    const text = `welcome to club buddy ${id}`
-    res.send(text)
+    const type = await db.collection('list').doc(id).get()
+    let results = type.data()
+    res.render(path.join(__dirname + '/public/views/print'), {
+        dataResult: results,
+    })
 })
 app.listen(port, () => console.log(`server start on port ${port}`))
 module.exports = app
